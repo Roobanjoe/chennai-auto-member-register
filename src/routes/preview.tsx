@@ -16,6 +16,8 @@ import {
   loadPhoto,
   type DraftPhoto,
 } from "@/lib/member-draft";
+import { RegistrationProgress } from "@/components/RegistrationProgress";
+
 
 export const Route = createFileRoute("/preview")({
   head: () => ({ meta: [{ title: "முன்னோட்டம் — உறுப்பினர் பதிவு" }] }),

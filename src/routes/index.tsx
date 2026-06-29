@@ -29,6 +29,8 @@ import {
   type DraftPhoto,
 } from "@/lib/member-draft";
 import { supabase } from "@/integrations/supabase/client";
+import { RegistrationProgress } from "@/components/RegistrationProgress";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -179,8 +181,11 @@ function RegisterPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 pb-32 pt-6 sm:px-6 sm:pb-10">
-      <div className="mb-6">
+    <>
+      <RegistrationProgress />
+      <div className="mx-auto max-w-3xl px-4 pb-32 pt-6 sm:px-6 sm:pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
+        <div className="mb-6">
+
         <h2 className="text-2xl font-semibold text-primary sm:text-3xl">உறுப்பினர் பதிவு</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           மூன்று எளிய படிகளில் உறுப்பினரை பதிவு செய்யவும்
