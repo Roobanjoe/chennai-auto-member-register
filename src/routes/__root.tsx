@@ -4,14 +4,18 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { LogIn, LogOut, ShieldCheck, UserPlus, Users } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import logo from "../assets/logo.png.asset.json";
 import { Toaster } from "@/components/ui/sonner";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -111,10 +115,38 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function AppHeader() {
+  const [authed, setAuthed] = useState(false);
+  const navigate = useNavigate();
+  const router = useRouter();
+
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (active) setAuthed(!!data.session);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setAuthed(!!session);
+      router.invalidate();
+    });
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
+  }, [router]);
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth" });
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
-        <img src={logo.url} alt="சங்கம் சின்னம்" className="h-12 w-12 shrink-0 rounded-full ring-2 ring-primary/20 sm:h-14 sm:w-14" />
+        <img
+          src={logo.url}
+          alt="சங்கம் சின்னம்"
+          className="h-12 w-12 shrink-0 rounded-full ring-2 ring-primary/20 transition-transform hover:scale-105 sm:h-14 sm:w-14"
+        />
         <div className="min-w-0 flex-1">
           <h1 className="truncate text-sm font-semibold leading-tight text-primary sm:text-base">
             சென்னை மக்கள் ஆட்டோ ஓட்டுநர் தொழிற்சங்கம்
@@ -127,18 +159,52 @@ function AppHeader() {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="rounded-md px-3 py-1.5 text-xs font-medium text-foreground/80 hover:bg-primary-soft hover:text-primary sm:text-sm"
-            activeProps={{ className: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" }}
+            className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-foreground/80 transition-colors hover:bg-primary-soft hover:text-primary sm:px-3 sm:text-sm"
+            activeProps={{
+              className:
+                "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+            }}
           >
-            பதிவு
+            <UserPlus className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">பதிவு</span>
           </Link>
-          <Link
-            to="/dashboard"
-            className="rounded-md px-3 py-1.5 text-xs font-medium text-foreground/80 hover:bg-primary-soft hover:text-primary sm:text-sm"
-            activeProps={{ className: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" }}
-          >
-            உறுப்பினர்கள்
-          </Link>
+          {authed ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-foreground/80 transition-colors hover:bg-primary-soft hover:text-primary sm:px-3 sm:text-sm"
+                activeProps={{
+                  className:
+                    "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+                }}
+              >
+                <Users className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">உறுப்பினர்கள்</span>
+              </Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={logout}
+                className="h-8 gap-1.5 px-2.5 text-xs text-foreground/80 hover:bg-destructive/10 hover:text-destructive sm:text-sm"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">வெளியேறு</span>
+              </Button>
+            </>
+          ) : (
+            <Link
+              to="/auth"
+              className="inline-flex items-center gap-1.5 rounded-md border border-primary/20 bg-background px-2.5 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary-soft sm:px-3 sm:text-sm"
+              activeProps={{
+                className:
+                  "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+              }}
+            >
+              <ShieldCheck className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">நிர்வாகி</span>
+              <LogIn className="h-3.5 w-3.5 sm:hidden" />
+            </Link>
+          )}
         </nav>
       </div>
     </header>
