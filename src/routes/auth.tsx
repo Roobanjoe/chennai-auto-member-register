@@ -9,7 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { usernameToEmail } from "@/lib/admin-auth";
-import logo from "../assets/logo.png.asset.json";
+import { SiteLogo } from "@/components/SiteLogo";
+import { ensureSiteLogoSeeded } from "@/lib/site-logo";
+
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "நிர்வாகி உள்நுழைவு" }] }),
@@ -46,7 +48,12 @@ function AuthPage() {
       });
       if (error) throw error;
       toast.success("வரவேற்கிறோம், நிர்வாகி");
+      // One-time seed: ensure the site logo lives in Supabase Storage.
+      void ensureSiteLogoSeeded(
+        "https://chennai-auto-sangam-portal.lovable.app/__l5e/assets-v1/c323c763-ad48-4cfd-af66-29292d42e486/logo.png",
+      );
       navigate({ to: "/dashboard" });
+
     } catch (err) {
       toast.error("உள்நுழைய முடியவில்லை. பயனர் பெயர் / கடவுச்சொல் சரிபார்க்கவும்.");
       console.error(err);
@@ -70,11 +77,8 @@ function AuthPage() {
       <Card className="w-full max-w-md border-primary/10 shadow-card">
         <CardContent className="p-7 sm:p-9">
           <div className="flex flex-col items-center text-center">
-            <img
-              src={logo.url}
-              alt="சங்கம் சின்னம்"
-              className="h-16 w-16 rounded-full ring-2 ring-primary/20"
-            />
+            <SiteLogo className="h-16 w-16 rounded-full ring-2 ring-primary/20" />
+
             <h1 className="mt-4 text-lg font-semibold text-primary sm:text-xl">
               நிர்வாகி உள்நுழைவு
             </h1>

@@ -16,6 +16,8 @@ import {
   loadPhoto,
   type DraftPhoto,
 } from "@/lib/member-draft";
+import { RegistrationProgress } from "@/components/RegistrationProgress";
+
 
 export const Route = createFileRoute("/preview")({
   head: () => ({ meta: [{ title: "முன்னோட்டம் — உறுப்பினர் பதிவு" }] }),
@@ -87,7 +89,10 @@ function PreviewPage() {
   const renewal = format(parseISO(values.renewal_date), "dd/MM/yyyy");
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-28 pt-6 sm:px-6 sm:pb-10">
+    <>
+      <RegistrationProgress />
+      <div className="mx-auto max-w-4xl px-4 pb-28 pt-6 sm:px-6 sm:pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
+
       <div className="mb-6">
         <h2 className="text-2xl font-semibold text-primary sm:text-3xl">முன்னோட்டம்</h2>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -152,9 +157,11 @@ function PreviewPage() {
         <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
         அனைத்து கட்டாய சரிபார்ப்புகளும் நிறைவடைந்தன
       </div>
-    </div>
+      </div>
+    </>
   );
 }
+
 
 function Row({ label, value, multiline }: { label: string; value: string; multiline?: boolean }) {
   return (
