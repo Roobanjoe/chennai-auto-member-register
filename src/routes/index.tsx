@@ -269,9 +269,11 @@ function RegisterPage() {
           </div>
         </form>
       </Form>
-    </div>
+      </div>
+    </>
   );
 }
+
 
 function Stepper({ step }: { step: number }) {
   return (
