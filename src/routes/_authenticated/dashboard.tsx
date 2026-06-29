@@ -40,7 +40,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 type Member = Database["public"]["Tables"]["members"]["Row"];
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "உறுப்பினர்கள் பட்டியல்" }] }),
   component: DashboardPage,
 });
