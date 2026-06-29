@@ -5,8 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Tiro Tamil", serif;
+  --font-sans: "Meera Inimai", "Tiro Tamil", sans-serif;
   --font-serif: "Tiro Tamil", serif;
+  --font-display: "sheershak-tamil", "Meera Inimai", "Tiro Tamil", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
