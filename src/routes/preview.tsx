@@ -157,9 +157,11 @@ function PreviewPage() {
         <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
         அனைத்து கட்டாய சரிபார்ப்புகளும் நிறைவடைந்தன
       </div>
-    </div>
+      </div>
+    </>
   );
 }
+
 
 function Row({ label, value, multiline }: { label: string; value: string; multiline?: boolean }) {
   return (
