@@ -39,7 +39,7 @@ function ThankYouPage() {
             </p>
 
             <div className="mt-7 flex items-center gap-3 rounded-2xl border border-primary/15 bg-primary-soft/60 px-4 py-3">
-              <img src={logo.url} alt="" className="h-10 w-10 rounded-full ring-2 ring-primary/20" />
+              <SiteLogo className="h-10 w-10 rounded-full ring-2 ring-primary/20" />
               <p className="text-left text-sm font-medium text-primary-deep">
                 சென்னை மக்கள் ஆட்டோ <br className="sm:hidden" />
                 ஓட்டுநர் தொழிற்சங்கம்
@@ -61,5 +61,7 @@ function ThankYouPage() {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }
+
