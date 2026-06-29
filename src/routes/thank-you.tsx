@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, Home, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import logo from "../assets/logo.png.asset.json";
+import { SiteLogo } from "@/components/SiteLogo";
+import { RegistrationProgress } from "@/components/RegistrationProgress";
 
 export const Route = createFileRoute("/thank-you")({
   head: () => ({ meta: [{ title: "நன்றி — பதிவு வெற்றி" }] }),
@@ -11,7 +12,10 @@ export const Route = createFileRoute("/thank-you")({
 
 function ThankYouPage() {
   return (
-    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-10">
+    <>
+      <RegistrationProgress />
+    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-10 animate-in fade-in duration-500">
+
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary-soft via-background to-accent/15" />
       <div className="absolute -top-24 left-1/2 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" aria-hidden />
 

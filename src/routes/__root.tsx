@@ -12,11 +12,11 @@ import { useEffect, useState, type ReactNode } from "react";
 import { LogIn, LogOut, ShieldCheck, UserPlus, Users } from "lucide-react";
 
 import appCss from "../styles.css?url";
-import logo from "../assets/logo.png.asset.json";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteLogo } from "@/components/SiteLogo";
 
 function NotFoundComponent() {
   return (
@@ -89,8 +89,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "சென்னை மக்கள் ஆட்டோ ஓட்டுநர் தொழிற்சங்கம் — உறுப்பினர் பதிவு" },
       { property: "og:description", content: "சென்னை மக்கள் ஆட்டோ ஓட்டுநர் தொழிற்சங்கம் உறுப்பினர் பதிவு முறை" },
       { name: "twitter:description", content: "சென்னை மக்கள் ஆட்டோ ஓட்டுநர் தொழிற்சங்கம் உறுப்பினர் பதிவு முறை" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c9dbec57-daac-4b8d-87da-57e44a40b76d/id-preview-310549e2--c4652dec-de93-4cd1-9477-894e8d32a61e.lovable.app-1782740879830.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c9dbec57-daac-4b8d-87da-57e44a40b76d/id-preview-310549e2--c4652dec-de93-4cd1-9477-894e8d32a61e.lovable.app-1782740879830.png" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
     ],
@@ -98,7 +96,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Meera+Inimai&family=Tiro+Tamil:ital@0;1&display=swap" },
-      { rel: "icon", href: logo.url },
       { rel: "stylesheet", href: appCss },
     ],
   }),
@@ -132,7 +129,8 @@ function AppHeader() {
     supabase.auth.getSession().then(({ data }) => {
       if (active) setAuthed(!!data.session);
     });
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       setAuthed(!!session);
       router.invalidate();
     });
@@ -150,11 +148,7 @@ function AppHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
-        <img
-          src={logo.url}
-          alt="சங்கம் சின்னம்"
-          className="h-12 w-12 shrink-0 rounded-full ring-2 ring-primary/20 transition-transform hover:scale-105 sm:h-14 sm:w-14"
-        />
+        <SiteLogo className="h-12 w-12 shrink-0 rounded-full ring-2 ring-primary/20 transition-transform hover:scale-105 sm:h-14 sm:w-14" />
         <div className="min-w-0 flex-1">
           <h1 className="truncate text-sm font-semibold leading-tight text-primary sm:text-base">
             சென்னை மக்கள் ஆட்டோ ஓட்டுநர் தொழிற்சங்கம்
