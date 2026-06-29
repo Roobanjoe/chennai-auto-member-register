@@ -15,7 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as ApiPublicSeedLogoRouteImport } from './routes/api/public/_seed-logo'
+import { Route as ApiPublicSeedLogoRouteImport } from './routes/api/public/seed-logo'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
@@ -47,8 +47,8 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiPublicSeedLogoRoute = ApiPublicSeedLogoRouteImport.update({
-  id: '/api/public/_seed-logo',
-  path: '/api/public',
+  id: '/api/public/seed-logo',
+  path: '/api/public/seed-logo',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -58,7 +58,7 @@ export interface FileRoutesByFullPath {
   '/preview': typeof PreviewRoute
   '/thank-you': typeof ThankYouRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/api/public': typeof ApiPublicSeedLogoRoute
+  '/api/public/seed-logo': typeof ApiPublicSeedLogoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -66,7 +66,7 @@ export interface FileRoutesByTo {
   '/preview': typeof PreviewRoute
   '/thank-you': typeof ThankYouRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/api/public': typeof ApiPublicSeedLogoRoute
+  '/api/public/seed-logo': typeof ApiPublicSeedLogoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -76,7 +76,7 @@ export interface FileRoutesById {
   '/preview': typeof PreviewRoute
   '/thank-you': typeof ThankYouRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/api/public/_seed-logo': typeof ApiPublicSeedLogoRoute
+  '/api/public/seed-logo': typeof ApiPublicSeedLogoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -86,9 +86,15 @@ export interface FileRouteTypes {
     | '/preview'
     | '/thank-you'
     | '/dashboard'
-    | '/api/public'
+    | '/api/public/seed-logo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/preview' | '/thank-you' | '/dashboard' | '/api/public'
+  to:
+    | '/'
+    | '/auth'
+    | '/preview'
+    | '/thank-you'
+    | '/dashboard'
+    | '/api/public/seed-logo'
   id:
     | '__root__'
     | '/'
@@ -97,7 +103,7 @@ export interface FileRouteTypes {
     | '/preview'
     | '/thank-you'
     | '/_authenticated/dashboard'
-    | '/api/public/_seed-logo'
+    | '/api/public/seed-logo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,10 +159,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/_seed-logo': {
-      id: '/api/public/_seed-logo'
-      path: '/api/public'
-      fullPath: '/api/public'
+    '/api/public/seed-logo': {
+      id: '/api/public/seed-logo'
+      path: '/api/public/seed-logo'
+      fullPath: '/api/public/seed-logo'
       preLoaderRoute: typeof ApiPublicSeedLogoRouteImport
       parentRoute: typeof rootRouteImport
     }

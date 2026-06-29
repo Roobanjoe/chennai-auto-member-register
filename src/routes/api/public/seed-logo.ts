@@ -2,7 +2,7 @@
 // Safe to leave: it no-ops once the file already exists.
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/public/_seed-logo")({
+export const Route = createFileRoute("/api/public/seed-logo")({
   server: {
     handlers: {
       GET: async () => {
