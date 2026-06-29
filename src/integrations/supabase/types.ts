@@ -14,7 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      members: {
+        Row: {
+          address: string
+          auto_stand: string
+          blood_group: string
+          created_at: string
+          dob: string
+          emergency_mobile: string
+          father_name: string
+          id: string
+          license_no: string
+          member_no: string
+          mobile: string
+          name: string
+          photo_url: string
+          position: string
+          renewal_date: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          auto_stand: string
+          blood_group: string
+          created_at?: string
+          dob: string
+          emergency_mobile: string
+          father_name: string
+          id?: string
+          license_no: string
+          member_no: string
+          mobile: string
+          name: string
+          photo_url: string
+          position: string
+          renewal_date: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          auto_stand?: string
+          blood_group?: string
+          created_at?: string
+          dob?: string
+          emergency_mobile?: string
+          father_name?: string
+          id?: string
+          license_no?: string
+          member_no?: string
+          mobile?: string
+          name?: string
+          photo_url?: string
+          position?: string
+          renewal_date?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
