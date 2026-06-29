@@ -66,7 +66,7 @@ function PreviewPage() {
 
       toast.success("உறுப்பினர் பதிவு வெற்றிகரமாக சேமிக்கப்பட்டது.");
       clearDraft();
-      navigate({ to: "/" });
+      navigate({ to: "/thank-you" });
     } catch (err) {
       console.error(err);
       toast.error("சேமிக்க முடியவில்லை: " + (err as Error).message);
