@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedIdCardMemberIdRouteImport } from './routes/_authenticated/id-card.$memberId'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
@@ -45,6 +46,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedIdCardMemberIdRoute =
+  AuthenticatedIdCardMemberIdRouteImport.update({
+    id: '/id-card/$memberId',
+    path: '/id-card/$memberId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/preview': typeof PreviewRoute
   '/thank-you': typeof ThankYouRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/id-card/$memberId': typeof AuthenticatedIdCardMemberIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
   '/preview': typeof PreviewRoute
   '/thank-you': typeof ThankYouRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/id-card/$memberId': typeof AuthenticatedIdCardMemberIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +77,25 @@ export interface FileRoutesById {
   '/preview': typeof PreviewRoute
   '/thank-you': typeof ThankYouRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/id-card/$memberId': typeof AuthenticatedIdCardMemberIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/preview' | '/thank-you' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/preview'
+    | '/thank-you'
+    | '/dashboard'
+    | '/id-card/$memberId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/preview' | '/thank-you' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/preview'
+    | '/thank-you'
+    | '/dashboard'
+    | '/id-card/$memberId'
   id:
     | '__root__'
     | '/'
@@ -82,6 +104,7 @@ export interface FileRouteTypes {
     | '/preview'
     | '/thank-you'
     | '/_authenticated/dashboard'
+    | '/_authenticated/id-card/$memberId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -136,15 +159,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/id-card/$memberId': {
+      id: '/_authenticated/id-card/$memberId'
+      path: '/id-card/$memberId'
+      fullPath: '/id-card/$memberId'
+      preLoaderRoute: typeof AuthenticatedIdCardMemberIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedIdCardMemberIdRoute: typeof AuthenticatedIdCardMemberIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedIdCardMemberIdRoute: AuthenticatedIdCardMemberIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

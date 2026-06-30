@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format, parseISO, isToday } from "date-fns";
 import {
@@ -16,6 +16,7 @@ import {
   Phone,
   MapPin,
   Droplet,
+  IdCard,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -283,6 +284,17 @@ function MemberCard({
         <div className="inline-flex items-center gap-1">
           <Button size="icon" variant="ghost" className="h-8 w-8" onClick={onView} title="பார்">
             <Eye className="h-4 w-4" />
+          </Button>
+          <Button
+            asChild
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 text-primary hover:bg-primary/10"
+            title="அடையாள அட்டை"
+          >
+            <Link to="/id-card/$memberId" params={{ memberId: member.id }}>
+              <IdCard className="h-4 w-4" />
+            </Link>
           </Button>
           <Button size="icon" variant="ghost" className="h-8 w-8" onClick={onEdit} title="திருத்து">
             <Pencil className="h-4 w-4" />
